@@ -5,3 +5,10 @@ C:\Users\Administrator\Desktop\PrinterGUI\PrinterManager\PrinterManager\obj\x86\
 C:\Users\Administrator\Desktop\PrinterGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.csproj.GenerateResource.Cache
 C:\Users\Administrator\Desktop\PrinterGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.exe
 C:\Users\Administrator\Desktop\PrinterGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.pdb
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.exe
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.pdb
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\bin\Debug\PrinterManager.exe
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\bin\Debug\PrinterManager.pdb
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.Properties.Resources.resources
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\PrinterGUI\PrintingGUI\PrinterManager\PrinterManager\obj\x86\Debug\PrinterManager.Form1.resources

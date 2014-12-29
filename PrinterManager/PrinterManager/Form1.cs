@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Net;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace PrinterManager
 {
@@ -21,25 +22,24 @@ namespace PrinterManager
 
         private string current_server = "", location_property_name = "", working_directory = "", download_path = "", key_value_filename = "", printer_list_filename = "";
         private string[] servers = new string[] { };
-
+                
         public Form1()
         {
+            InitializeComponent();
+
             // Read config file
             ReadConfigFile();
-            
+
             // Get all available printers and add them into the available list
             RetrievePrinterList();
 
-            this.listView1 = new ListView();
+            //this.imageList1.Images.Add(IconExtractor.Extract("shell32.dll", 14, true));
             GetCurrentPrinterList();
-
-            InitializeComponent();
-
-            listBox1.DataSource = _printers;            
         }
 
         public void GetCurrentPrinterList()
         {            
+            // Search all installed printers and retrieve the comment property string that will identify which printers this service previously installed on the system
             // Search all installed printers and retrieve the comment property string that will identify which printers this service previously installed on the system
             System.Management.ManagementObjectSearcher searcher = new System.Management.ManagementObjectSearcher("SELECT * FROM Win32_Printer");
             foreach (System.Management.ManagementObject printer in searcher.Get())
@@ -50,9 +50,21 @@ namespace PrinterManager
                 if (location.Contains(location_property_name) && printer["Location"] != null)
                 {
                     // This is one of our network printers
-                    listView1.Items.Add(printer["Name"].ToString());
+                    _currentPrinters.Add(printer["Name"].ToString());
                 }
-            }            
+            }
+
+            this.listView1.View = View.LargeIcon;
+            this.listView1.LargeImageList = this.imageList1;
+            foreach (string p in _currentPrinters)
+            { 
+                ListViewItem li = new ListViewItem(p);
+                //li.ImageList = this.imageList1;
+                li.ImageIndex = 0;
+                //li.ImageKey = "printer";
+
+                this.listView1.Items.Add(li);
+            }
         }
 
         public void ReadConfigFile()
@@ -120,7 +132,9 @@ namespace PrinterManager
                     {
                         // Split the line and keep just the printer name
                         string[] split = line.Split((string[])null, 3, StringSplitOptions.RemoveEmptyEntries);
-                        _printers.Add(split[0]);                        
+                        _printers.Add(split[0]);
+
+                        this.comboBox1.Items.Add(split[0]); // Add to dropdown box
                     }
                     file.Close();
                 }
@@ -173,5 +187,25 @@ namespace PrinterManager
         {
             RemovePrinter("CMS-5");
         }
+    }
+
+    public class IconExtractor
+    {
+        public static Icon Extract(string file, int number, bool largeIcon)
+        {
+            IntPtr large;
+            IntPtr small;
+            ExtractIconEx(file, number, out large, out small, 1);
+            try
+            {
+                return Icon.FromHandle(largeIcon ? large : small);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        [DllImport("Shell32.dll", EntryPoint = "ExtractIconExW", CharSet = CharSet.Unicode, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+        private static extern int ExtractIconEx(string sFile, int iIndex, out IntPtr piLargeVersion, out IntPtr piSmallVersion, int amountIcons);
     }
 }
